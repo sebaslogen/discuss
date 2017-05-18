@@ -19,4 +19,8 @@ defmodule Discuss.TopicController do
         render conn, "new.html", changeset: changeset
     end
   end
+
+  def index(conn, _) do
+
+  end
 end
