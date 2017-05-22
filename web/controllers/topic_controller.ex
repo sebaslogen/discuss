@@ -21,6 +21,7 @@ defmodule Discuss.TopicController do
   end
 
   def index(conn, _) do
-
+    topics = Repo.all(Topic)
+    render conn, "index.html", topics: topics
   end
 end
