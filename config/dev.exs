@@ -41,3 +41,7 @@ config :discuss, Discuss.Repo,
   database: "discuss_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Finally import the config/prod.secret.exs
+# which should be versioned separately.
+import_config "dev.secret.exs"

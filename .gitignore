@@ -37,3 +37,4 @@ erl_crash.dump
 *.iml
 .idea/workspace.xml
 .idea/sonarlint/issuestore/index.pb
+config/dev.secret.exs
