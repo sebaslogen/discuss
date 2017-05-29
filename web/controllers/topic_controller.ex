@@ -12,7 +12,11 @@ defmodule Discuss.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+    # conn.assigns[:user] === conn.assigns.user
+    changeset = conn.assigns.user
+    |> build_assoc(:topics) # Create table relationship between tables' rows
+    |> Topic.changeset(topic)
+
     case Repo.insert(changeset) do
       {:ok, _} ->
         conn
