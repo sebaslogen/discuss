@@ -5,6 +5,7 @@ defmodule Discuss.TopicController do
   alias Discuss.Topic
 
   plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :check_topic_owner when action in [:edit, :update, :delete]
 
   def new(conn, _) do
     changeset = Topic.changeset(%Topic{}, %{})
@@ -56,5 +57,16 @@ defmodule Discuss.TopicController do
     conn
     |> put_flash(:info, "Topic Deleted")
     |> redirect(to: topic_path(conn, :index))
+  end
+
+  def check_topic_owner(%{params: %{"id" => topic_id}} = conn, _) do
+    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be the owner of this topic")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt() # Stop pipping the connection to next plug/controller
+    end
   end
 end
