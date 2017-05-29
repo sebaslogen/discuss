@@ -30,6 +30,7 @@ defmodule Discuss.Router do
   scope "/auth", Discuss do
     pipe_through :browser # Use the default browser stack
 
+    get "/signout", AuthController, :signout # Order matter for wilcard in next line
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end
